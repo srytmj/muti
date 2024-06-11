@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
-use App\Http\Requests\StorePelangganRequest;
-use App\Http\Requests\UpdatePelangganRequest;
+use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
@@ -13,7 +12,13 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        //
+        //query data
+        $pelanggan = Pelanggan::all();
+        return view('pelanggan.view',
+                    [
+                        'pelanggan' => $pelanggan
+                    ]
+                  );
     }
 
     /**
@@ -21,15 +26,35 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        //
+        // berikan kode perusahaan secara otomatis
+        // 1. query dulu ke db, select max untuk mengetahui posisi terakhir 
+        
+        return view('pelanggan/create',
+        [
+            'id_pelanggan' => Pelanggan::getPelangganId()
+        ]
+      );
+        // return view('perusahaan/view');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePelangganRequest $request)
+    public function store(Request $request)
     {
-        //
+        //digunakan untuk validasi kemudian kalau ok tidak ada masalah baru disimpan ke db
+        $validated = $request->validate([
+            'id_pelanggan' => 'required',
+            'nama_pelanggan' => 'required',
+            'no_telp_pelanggan' => 'required',
+            'alamat_pelanggan' => 'required',
+            'jenis_kelamin_pelanggan' => 'required',
+        ]);
+
+        // masukkan ke db
+        Pelanggan::create($request->all());
+        
+        return redirect()->route('pelanggan.index')->with('success','Data Berhasil di Input');
     }
 
     /**
@@ -45,22 +70,37 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        //
+        return view('pelanggan.edit', compact('pelanggan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePelangganRequest $request, Pelanggan $pelanggan)
+    public function update(Request $request, Pelanggan $pelanggan)
     {
-        //
+        //digunakan untuk validasi kemudian kalau ok tidak ada masalah baru diupdate ke db
+        $validated = $request->validate([
+            'id_pelanggan' => 'required',
+            'nama_pelanggan' => 'required',
+            'no_telp_pelanggan' => 'required',
+            'alamat_pelanggan' => 'required',
+            'jenis_kelamin_pelanggan' => 'required',
+        ]);
+    
+        $pelanggan->update($validated);
+    
+        return redirect()->route('pelanggan.index')->with('success','Data Berhasil di Ubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pelanggan $pelanggan)
+    public function destroy($id)
     {
-        //
+        //hapus dari database
+        $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan->delete();
+
+        return redirect()->route('pelanggan.index')->with('success','Data Berhasil di Hapus');
     }
 }

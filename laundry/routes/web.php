@@ -53,11 +53,11 @@ Route::resource('/layanan', App\Http\Controllers\LayananController::class)->midd
 Route::get('/layanan/destroy/{id}', [App\Http\Controllers\LayananController::class,'destroy'])->middleware(['auth']);
 
 // untuk transaksi penjualan
-Route::get('penjualan/barang/{id}', [App\Http\Controllers\PenjualanController::class,'getDataBarang'])->middleware(['auth']);
+Route::get('penjualan/layanan/{id}', [App\Http\Controllers\PenjualanController::class,'getDataLayanan'])->middleware(['auth']);
 Route::get('penjualan/keranjang', [App\Http\Controllers\PenjualanController::class,'keranjang'])->middleware(['auth']);
 Route::get('penjualan/destroypenjualandetail/{id}', [App\Http\Controllers\PenjualanController::class,'destroypenjualandetail'])->middleware(['auth']);
-Route::get('penjualan/barang', [App\Http\Controllers\PenjualanController::class,'getDataBarangAll'])->middleware(['auth']);
-Route::get('penjualan/jmlbarang', [App\Http\Controllers\PenjualanController::class,'getJumlahBarang'])->middleware(['auth']);
+Route::get('penjualan/layanan', [App\Http\Controllers\PenjualanController::class,'getDataLayananAll'])->middleware(['auth']);
+Route::get('penjualan/jmllayanan', [App\Http\Controllers\PenjualanController::class,'getJumlahLayanan'])->middleware(['auth']);
 Route::get('penjualan/keranjangjson', [App\Http\Controllers\PenjualanController::class,'keranjangjson'])->middleware(['auth']);
 Route::get('penjualan/checkout', [App\Http\Controllers\PenjualanController::class,'checkout'])->middleware(['auth']);
 Route::get('penjualan/invoice', [App\Http\Controllers\PenjualanController::class,'invoice'])->middleware(['auth']);
@@ -79,5 +79,23 @@ Route::get('jurnal/umum', [App\Http\Controllers\JurnalController::class,'jurnalu
 Route::get('jurnal/viewdatajurnalumum/{periode}', [App\Http\Controllers\JurnalController::class,'viewdatajurnalumum'])->middleware(['auth']);
 Route::get('jurnal/bukubesar', [App\Http\Controllers\JurnalController::class,'bukubesar'])->middleware(['auth']);
 Route::get('jurnal/viewdatabukubesar/{periode}/{akun}', [App\Http\Controllers\JurnalController::class,'viewdatabukubesar'])->middleware(['auth']);
+
+use App\Http\Controllers\PelangganController;
+Route::get('pelanggan', [PelangganController::class, 'index'])->middleware('auth');
+Route::get('/pelanggan/destroy/{id}', [PelangganController::class,'destroy'])->middleware(['auth']);
+Route::resource('/pelanggan', PelangganController::class)->middleware(['auth']);
+
+use App\Http\Controllers\PeralatanController;
+Route::get('peralatan', [PeralatanController::class, 'index']);
+Route::resource('/peralatan', App\Http\Controllers\PeralatanController::class)->middleware(['auth']);
+Route::get('/peralatan/destroy/{id}', [App\Http\Controllers\PeralatanController::class,'destroy'])->middleware(['auth']);
+
+// untuk midtrans
+use App\Http\Controllers\CobaMidtransController;
+Route::get('midtrans', [App\Http\Controllers\CobaMidtransController::class,'index'])->middleware(['auth']);
+Route::get('midtrans/status', [App\Http\Controllers\CobaMidtransController::class,'cekstatus2'])->middleware(['auth']);
+Route::get('midtrans/status2/{id}', [App\Http\Controllers\CobaMidtransController::class,'cekstatus'])->middleware(['auth']);
+Route::get('midtrans/bayar', [App\Http\Controllers\CobaMidtransController::class,'bayar'])->middleware(['auth']);
+Route::post('midtrans/proses_bayar', [App\Http\Controllers\CobaMidtransController::class,'proses_bayar'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';

@@ -54,7 +54,7 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Layanan</h5>
+            <h5 class="card-title fw-semibold mb-4">Data Pelanggan</h5>
 
                 <!-- Display Error jika ada error -->
                 @if ($errors->any())
@@ -69,39 +69,47 @@
                 <!-- Akhir Display Error -->
 
                 <!-- Awal Dari Input Form -->
-                <form action="{{ route('layanan.update', $layanan->id) }}" method="post">
+                <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="post">
                     @csrf
                     @method('PUT')
                     <fieldset disabled>
-                        <div class="mb-3"><label for="idlayananlabel">ID Layanan</label>
-                        <input class="form-control form-control-solid" id="id_layanan_tampil" name="id_layanan_tampil" type="text" placeholder="Contoh: LYN-001" value="{{$layanan->id_layanan}}" readonly></div>
+                        <div class="mb-3"><label for="pelangganidlabel">Id Pelanggan</label>
+                        <input class="form-control form-control-solid" id="id_pelanggan_tampil" name="id_pelanggan_tampil" type="text" placeholder="Contoh: PR-001" value="{{$pelanggan->id_pelanggan}}" readonly></div>
                     </fieldset>
-                    <input type="hidden" id="id_layanan" name="id_layanan" value="{{$layanan->id_layanan}}">
+                    <input type="hidden" id="id_pelanggan" name="id_pelanggan" value="{{$pelanggan->id_pelanggan}}">
                     
-                    <div class="mb-0"><label for="tariflabel">Layanan</label>
-                        <textarea class="form-control form-control-solid" id="nama_layanan" name="nama_layanan" rows="3" placeholder="Cth: Cuci Kering">{{$layanan->nama_layanan}}</textarea>
+                    <!-- Nama Pelanggan -->
+                    <div class="mb-3">
+                      <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
+                      <input type="text" class="form-control form-control-solid" id="nama_pelanggan" name="nama_pelanggan" placeholder="Contoh: John Doe" value="{{ old('nama_pelanggan', $pelanggan->nama_pelanggan) }}">
                     </div>
 
+                    <!-- Nomor Telepon Pelanggan -->
                     <div class="mb-3">
-                      <label class="form-label">Jenis Layanan</label>
-                      <select name="jenis_layanan" class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="Regular">Regular</option>
-                        <option value="Express">Express</option>
+                      <label for="no_telp_pelanggan" class="form-label">Nomor Telepon</label>
+                      <input type="text" class="form-control form-control-solid" id="no_telp_pelanggan" name="no_telp_pelanggan" placeholder="Contoh: 081234567890" value="{{ old('no_telp_pelanggan', $pelanggan->no_telp_pelanggan) }}">
+                    </div>
+
+                    <!-- Alamat Pelanggan -->
+                    <div class="mb-3">
+                      <label for="alamat_pelanggan" class="form-label">Alamat Pelanggan</label>
+                      <textarea class="form-control form-control-solid" id="alamat_pelanggan" name="alamat_pelanggan" rows="3" placeholder="Contoh: Jl. Bunga Matahari No. 16">{{ old('alamat_pelanggan', $pelanggan->alamat_pelanggan) }}</textarea>
+                    </div>
+
+                    <!-- Jenis Kelamin Pelanggan -->
+                    <div class="mb-3">
+                      <label class="form-label">Jenis Kelamin</label>
+                      <select name="jenis_kelamin_pelanggan" class="form-select" aria-label="Default select example">
+                          <option value="Laki-Laki">Laki-Laki</option>
+                          <option value="Perempuan">Perempuan</option>
                       </select>
                   </div>
-                    
-        
-                    <div class="mb-0"><label for="tariflabel">Tarif</label>
-                        <textarea class="form-control form-control-solid" id="harga" name="harga" rows="3" placeholder="Cth: 20000">{{$layanan->harga}}</textarea>
-                    </div>
-                    <br>
                     <!-- untuk tombol simpan -->
                     
                     <input class="col-sm-1 btn btn-success btn-sm" type="submit" value="Ubah">
 
                     <!-- untuk tombol batal simpan -->
-                    <a class="col-sm-1 btn btn-dark  btn-sm" href="{{ url('/layanan') }}" role="button">Batal</a>
+                    <a class="col-sm-1 btn btn-dark  btn-sm" href="{{ url('/pelanggan') }}" role="button">Batal</a>
                     
                 </form>
                 <!-- Akhir Dari Input Form -->

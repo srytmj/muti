@@ -56,15 +56,15 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-12">
-                  <h5 class="card-title fw-semibold mb-4">Layanan</h5>
+                  <h5 class="card-title fw-semibold mb-4">Peralatan</h5>
                   <div class="card">
 
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Master Data Layanan</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Master Data Peralatan</h6>
                             
                             <!-- Tombol Tambah Data -->
-                            <a href="{{ url('/layanan/create') }}" class="btn btn-primary btn-icon-split btn-sm">
+                            <a href="{{ url('/peralatan/create') }}" class="btn btn-primary btn-icon-split btn-sm">
                                 <span class="icon text-white-50">
                                     <i class="ti ti-plus"></i>
                                 </span>
@@ -81,36 +81,29 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>ID</th>
-                                            <th>Layanan</th>
-                                            <th>Jenis Layanan</th>
-                                            <th>Tarif</th>
+                                            <th>Peralatan</th>
+                                            <th>Status</th>
+                                            {{-- <th>id_pesanan</th> --}}
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot class="thead-dark">
                                         <tr>
                                             <th>ID</th>
-                                            <th>Layanan</th>
-                                            <th>Jenis Layanan</th>
-                                            <th>Tarif</th>
+                                            <th>Peralatan</th>
+                                            <th>Status</th>
+                                            {{-- <th>id_pesanan</th> --}}
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                    @foreach ($layanan as $l)
+                                    @foreach ($peralatan as $l)
                                         <tr>
-                                            <td>{{ $l->id_layanan }}</td>
-                                            <td>{{ $l->nama_layanan }}</td>
-                                            <td>{{ $l->jenis_layanan }}</td>
-                                            <td>{{ $l->harga }}</td>
+                                            <td>{{ $l->id_peralatan }}</td>
+                                            <td>{{ $l->nama_peralatan }}</td>
+                                            <td>{{ $l->status }}</td>
+                                            {{-- <td>{{ $l->id_pesanan }}</td> --}}
                                             <td>
-                                                    <a href="{{ route('layanan.edit', $l->id) }}" class="btn btn-success btn-icon-split btn-sm">
-                                                        <span class="icon text-white-50">
-                                                            <i class="ti ti-check"></i>
-                                                        </span>
-                                                        <span class="text">Ubah</span>
-                                                    </a>
-
                                                     <a href="#" onclick="deleteConfirm(this); return false;" data-id="{{ $l->id }}" class="btn btn-danger btn-icon-split btn-sm">
                                                         <span class="icon text-white-50">
                                                             <i class="ti ti-minus"></i>
@@ -142,7 +135,7 @@
                 id = e.getAttribute('data-id');
 
                 // const str = 'Hello' + id + 'World';
-                var url3 = "{{url('layanan/destroy/')}}";
+                var url3 = "{{url('peralatan/destroy/')}}";
                 var url4 = url3.concat("/",id);
                 // console.log(url4);
 

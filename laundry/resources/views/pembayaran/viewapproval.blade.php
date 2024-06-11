@@ -81,7 +81,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tgl Bayar</th>
-                                            <th>Barang</th>
+                                            <th>Layanan</th>
                                             <th>Bukti Bayar</th>
                                             <th>Total</th>
                                             <th>Status</th>
@@ -92,7 +92,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tgl Bayar</th>
-                                            <th>Barang</th>
+                                            <th>Layanan</th>
                                             <th>Bukti Bayar</th>
                                             <th>Total</th>
                                             <th>Status</th>
@@ -104,7 +104,7 @@
                                         <tr>
                                             <td>{{ $p->no_transaksi }}</td>
                                             <td>{{ $p->tgl_bayar }}</td>
-                                            <td>{{ $p->list_barang }}</td>
+                                            <td>{{ $p->list_layanan }}</td>
                                             <td>
                                                 <a data-fancybox="gallery" href="{{url('konfirmasi')}}/{{$p->bukti_bayar}}">
                                                     <img src="{{url('konfirmasi')}}/{{$p->bukti_bayar}}" width="150px" height="150px">

@@ -48,14 +48,14 @@ class Pembayaran extends Model
         $sql = "SELECT a.id,a.no_transaksi,DATE_FORMAT(a.tgl_bayar,'%Y-%m-%d') as tgl_bayar,a.tgl_konfirmasi,a.bukti_bayar,
                         a.jenis_pembayaran,a.status,
                         b.total_harga,
-                        GROUP_CONCAT(d.nama_layanan ORDER BY d.nama_layanan) as list_barang
+                        GROUP_CONCAT(d.nama_layanan ORDER BY d.nama_layanan) as list_layanan
                 FROM pembayaran a
                 LEFT OUTER JOIN penjualan b
                 ON (a.no_transaksi=b.no_transaksi)
                 LEFT OUTER JOIN penjualan_detail c
                 ON (b.no_transaksi=c.no_transaksi)
-                LEFT OUTER JOIN barang d
-                ON (c.id_barang=d.id)
+                LEFT OUTER JOIN layanan d
+                ON (c.id_layanan=d.id)
                 GROUP BY a.id,a.no_transaksi,DATE_FORMAT(a.tgl_bayar,'%Y-%m-%d'),a.tgl_konfirmasi,a.bukti_bayar,
                         a.jenis_pembayaran,a.status,
                         b.total_harga";
@@ -71,14 +71,14 @@ class Pembayaran extends Model
         $sql = "SELECT a.id,a.no_transaksi,a.tgl_bayar,a.tgl_konfirmasi,a.bukti_bayar,
                         a.jenis_pembayaran,a.status,
                         b.total_harga,
-                        GROUP_CONCAT(d.nama_layanan ORDER BY d.nama_layanan) as list_barang
+                        GROUP_CONCAT(d.nama_layanan ORDER BY d.nama_layanan) as list_layanan
                 FROM pembayaran a
                 LEFT OUTER JOIN penjualan b
                 ON (a.no_transaksi=b.no_transaksi)
                 LEFT OUTER JOIN penjualan_detail c
                 ON (b.no_transaksi=c.no_transaksi)
-                LEFT OUTER JOIN barang d
-                ON (c.id_barang=d.id)
+                LEFT OUTER JOIN layanan d
+                ON (c.id_layanan=d.id)
                 WHERE b.id_pelanggan = ?
                 GROUP BY a.id,a.no_transaksi,a.tgl_bayar,a.tgl_konfirmasi,a.bukti_bayar,
                         a.jenis_pembayaran,a.status,

@@ -45,9 +45,10 @@ class LayananController extends Controller
         //digunakan untuk validasi kemudian kalau ok tidak ada masalah baru disimpan ke db
         $validated = $request->validate([
             'id_layanan' => 'required',
-            'layanan' => 'required',
+            'nama_layanan' => 'required',
             'jenis_layanan' => 'required',
-            'tarif' => 'required',
+            'harga' => 'required',
+            'deskripsi' => 'required',
         ]);
 
         // masukkan ke db
@@ -80,9 +81,10 @@ class LayananController extends Controller
         //digunakan untuk validasi kemudian kalau ok tidak ada masalah baru diupdate ke db
         $validated = $request->validate([
             'id_layanan' => 'required',
-            'layanan' => 'required',
+            'nama_layanan' => 'required',
             'jenis_layanan' => 'required',
-            'tarif' => 'required',
+            'harga' => 'required',
+            'deskripsi' => 'required',
         ]);
     
         $layanan->update($validated);

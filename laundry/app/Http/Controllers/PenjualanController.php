@@ -20,26 +20,26 @@ class PenjualanController extends Controller
 
     public function index()
     {
-        // getViewBarang()
-        $barang = Penjualan::getBarang();
+        // getViewLayanan()
+        $layanan = Penjualan::getLayanan();
         $id_pelanggan = Auth::id(); //dapatkan id pelanggan dari sesi user
         return view('penjualan.view',
                 [
-                    'barang' => $barang,
+                    'layanan' => $layanan,
                     'jml' => Penjualan::getJumlahKg($id_pelanggan),
                     'jml_invoice' => Penjualan::getJmlInvoice($id_pelanggan),
                 ]
         );
     }
 
-    // dapatkan data barang berdasarkan id barang
-    public function getDataBarang($id){
-        $barang = Penjualan::getBarangId($id);
-        if($barang)
+    // dapatkan data layanan berdasarkan id layanan
+    public function getDataLayanan($id){
+        $layanan = Penjualan::getLayananId($id);
+        if($layanan)
         {
             return response()->json([
                 'status'=>200,
-                'barang'=> $barang,
+                'layanan'=> $layanan,
             ]);
         }
         else
@@ -51,14 +51,14 @@ class PenjualanController extends Controller
         }
     }
 
-    // dapatkan data barang berdasarkan id barang
-    public function getDataBarangAll(){
-        $barang = Penjualan::getBarang();
-        if($barang)
+    // dapatkan data layanan berdasarkan id layanan
+    public function getDataLayananAll(){
+        $layanan = Penjualan::getLayanan();
+        if($layanan)
         {
             return response()->json([
                 'status'=>200,
-                'barang'=> $barang,
+                'layanan'=> $layanan,
             ]);
         }
         else
@@ -70,11 +70,11 @@ class PenjualanController extends Controller
         }
     }
 
-    // dapatkan jumlah barang untuk keranjang
+    // dapatkan jumlah layanan untuk keranjang
     public function getJumlahKg(){
         $id_pelanggan = Auth::id();
         $jml_kg = Penjualan::getJumlahKg($id_pelanggan);
-        if($jml_barang)
+        if($jml_layanan)
         {
             return response()->json([
                 'status'=>200,
@@ -90,7 +90,7 @@ class PenjualanController extends Controller
         }
     }
 
-    // dapatkan jumlah barang untuk keranjang
+    // dapatkan jumlah layanan untuk keranjang
     public function getInvoice(){
         $id_pelanggan = Auth::id();
         $jml_kg = Penjualan::getJmlInvoice($id_pelanggan);
@@ -155,15 +155,15 @@ class PenjualanController extends Controller
 
                 $id_pelanggan = Auth::id();
                 $jml_kg = $request->input('jumlah');
-                $id_barang = $request->input('idbaranghidden');
+                $id_layanan = $request->input('idlayananhidden');
 
-                $brg = Penjualan::getBarangId($id_barang);
+                $brg = Penjualan::getLayananId($id_layanan);
                 foreach($brg as $b):
-                    $harga_barang = $b->harga;
+                    $harga_layanan = $b->harga;
                 endforeach;
 
-                $total_harga = $harga_barang*$jml_kg;
-                Penjualan::inputPenjualan($id_pelanggan,$total_harga,$id_barang,$jml_kg,$harga_barang,$total_harga);
+                $total_harga = $harga_layanan*$jml_kg;
+                Penjualan::inputPenjualan($id_pelanggan,$total_harga,$id_layanan,$jml_kg,$harga_layanan,$total_harga);
 
                 return response()->json(
                     [
@@ -269,7 +269,7 @@ class PenjualanController extends Controller
     public function checkout(){
         $id_pelanggan = Auth::id();
         Penjualan::checkout($id_pelanggan); //proses cekout
-        $barang = Penjualan::getBarang();
+        $layanan = Penjualan::getLayanan();
 
         return redirect('penjualan/status');
     }

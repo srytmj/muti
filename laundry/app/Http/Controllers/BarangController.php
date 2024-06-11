@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barang;
-use App\Http\Requests\StoreBarangRequest;
-use App\Http\Requests\UpdateBarangRequest;
+use App\Models\Layanan;
+use App\Http\Requests\StoreLayananRequest;
+use App\Http\Requests\UpdateLayananRequest;
 
-class BarangController extends Controller
+class LayananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $barang = Barang::all();
-        return view ('barang/view',[
-        'barang'=> $barang,
+        $layanan = Layanan::all();
+        return view ('layanan/view',[
+        'layanan'=> $layanan,
         'title'=> 'contoh M2',
         'nama'=> 'Reni'
         ]
@@ -33,7 +33,7 @@ class BarangController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBarangRequest $request)
+    public function store(StoreLayananRequest $request)
     {
         //
     }
@@ -41,7 +41,7 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Barang $barang)
+    public function show(Layanan $layanan)
     {
         //
     }
@@ -49,7 +49,7 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Barang $barang)
+    public function edit(Layanan $layanan)
     {
         //
     }
@@ -57,7 +57,7 @@ class BarangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBarangRequest $request, Barang $barang)
+    public function update(UpdateLayananRequest $request, Layanan $layanan)
     {
         //
     }
@@ -65,7 +65,7 @@ class BarangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Barang $barang)
+    public function destroy(Layanan $layanan)
     {
         //
     }

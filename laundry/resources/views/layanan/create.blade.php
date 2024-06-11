@@ -79,8 +79,8 @@
 
                     <!-- Layanan -->
                     <div class="mb-3">
-                        <label for="tarif" class="form-label">Layanan</label>
-                        <input type="text" class="form-control form-control-solid" id="layanan" name="layanan" placeholder="Contoh: Cuci Kering" value="{{ old('layanan') }}">
+                        <label for="harga" class="form-label">Layanan</label>
+                        <input type="text" class="form-control form-control-solid" id="nama_layanan" name="nama_layanan" placeholder="Contoh: Cuci Kering" value="{{ old('nama_layanan') }}">
                     </div>
 
                     <!-- Jenis Layanan -->
@@ -95,9 +95,15 @@
 
                         <!-- Tarif -->
                         <div class="mb-3">
-                            <label for="tarif" class="form-label">Tarif</label>
-                            <input type="text" class="form-control form-control-solid" id="tarif" name="tarif" placeholder="Contoh: 20000" value="{{ old('tarif') }}">
+                            <label for="harga" class="form-label">Tarif</label>
+                            <input type="text" class="form-control form-control-solid" id="harga" name="harga" placeholder="Contoh: 20000" value="{{ old('harga') }}">
                         </div>
+
+                    <!-- deskripsi -->
+                    <div class="mb-3">
+                        <label for="harga" class="form-label">Deskripsi</label>
+                        <textarea type="text" class="form-control form-control-solid" id="deskripsi" name="deskripsi" placeholder="Contoh: Cuci kering adalah layanan pencucian tanpa menggunakan air sama sekali. Pencucian reguler dapat mencuci pakaian biasa dan pakaian dengan kain khusus." value="{{ old('deskripsi') }}"></textarea>
+                    </div>
 
                     <!-- untuk tombol simpan -->
                     

@@ -11,10 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('perusahaans', function (Blueprint $table) {
-            $table->id();
+        Schema::create('perusahaan', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('kode_perusahaan', 10);
+            $table->string('nama_perusahaan', 50);
+            $table->string('alamat_perusahaan', 100);
             $table->timestamps();
         });
+
+        // Insert some data
+        DB::table('perusahaan')->insert([
+            'kode_perusahaan' => 'PR-001',
+            'nama_perusahaan' => 'Laundry',
+            'alamat_perusahaan' => 'Jl. Raya Yang Tak Kunjung Sepi',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -22,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('perusahaans');
+        Schema::dropIfExists('perusahaan');
     }
 };

@@ -13,21 +13,21 @@ class Penjualan extends Model
     protected $table = 'penjualan';
     protected $fillable = ['no_transaksi','id_pelanggan','tgl_transaksi','tgl_expired','total_harga','status'];
 
-    // untuk melihat data barang
-    public static function getBarang()
+    // untuk melihat data layanan
+    public static function getLayanan()
     {
-        // query ke tabel barang
-        $sql = "SELECT * FROM barang";
-        $barang = DB::select($sql);
-        return $barang;
+        // query ke tabel layanan
+        $sql = "SELECT * FROM layanan";
+        $layanan = DB::select($sql);
+        return $layanan;
     }
 
-    // untuk melihat data barang berdasarkan id
-    public static function getBarangId($id)
+    // untuk melihat data layanan berdasarkan id
+    public static function getLayananId($id)
     {
-        $sql = "SELECT * FROM barang WHERE id = ?";
-        $barang = DB::select($sql,[$id]);
-        return $barang;
+        $sql = "SELECT * FROM layanan WHERE id = ?";
+        $layanan = DB::select($sql,[$id]);
+        return $layanan;
     }
 
     // untuk melihat data invoice
@@ -66,11 +66,11 @@ class Penjualan extends Model
         ]);
     }
 
-    // lihat stok barang
-    public static function getStock($id_barang){
-        $sql = "SELECT stok FROM barang WHERE id = ?";
-        $barang = DB::select($sql,[$id_barang]);
-        foreach($barang as $b):
+    // lihat stok layanan
+    public static function getStock($id_layanan){
+        $sql = "SELECT stok FROM layanan WHERE id = ?";
+        $layanan = DB::select($sql,[$id_layanan]);
+        foreach($layanan as $b):
             $stok = $b->stok;
         endforeach;
         return $stok;
@@ -129,8 +129,8 @@ class Penjualan extends Model
     public static function getInvoiceNumber(){
         $sql = "SELECT SUBSTRING(IFNULL(MAX(no_transaksi),'FK-0000'),4)+0 AS no 
                 FROM penjualan";
-        $barang = DB::select($sql);
-        foreach($barang as $b):
+        $layanan = DB::select($sql);
+        foreach($layanan as $b):
             $urutan = $b->no;
         endforeach;
 
@@ -145,7 +145,7 @@ class Penjualan extends Model
 
 
     // prosedur input data penjualan 
-    public static function inputPenjualan($id_pelanggan,$total_harga,$id_barang,$jml_kg,$harga_barang,$total){
+    public static function inputPenjualan($id_pelanggan,$total_harga,$id_layanan,$jml_kg,$harga_layanan,$total){
         
         // instansiasi obyek
         $penjualan = new Penjualan;
@@ -155,8 +155,8 @@ class Penjualan extends Model
                 FROM penjualan 
                 WHERE id_pelanggan = ? 
                 AND status not in ('expired','selesai','siap_bayar','konfirmasi_bayar')";
-        $barang = DB::select($sql,[$id_pelanggan]);
-        foreach($barang as $b):
+        $layanan = DB::select($sql,[$id_pelanggan]);
+        foreach($layanan as $b):
             $jml = $b->jml;
         endforeach;
 
@@ -185,21 +185,21 @@ class Penjualan extends Model
             // masukkan ke tabel detail_penjualan
             DB::table('penjualan_detail')->insert([
                 'no_transaksi' => $faktur,
-                'id_barang' => $id_barang,
-                'harga_barang' => $harga_barang,
+                'id_layanan' => $id_layanan,
+                'harga_layanan' => $harga_layanan,
                 'jml_kg' => $jml_kg,
                 'total' => $total,
                 'tgl_transaksi' => $date,
                 'tgl_expired' => $date_plus_3
             ]);
 
-            // update stok di tabel barang menjadi berkurang
+            // update stok di tabel layanan menjadi berkurang
             // dapatkan stok dulu
             //$penjualan = new Penjualan;
-            //$stok = $penjualan->getStock($id_barang);
-            //$stok_akhir = $stok - $jml_barang;
-            //$affected = DB::table('barang')
-              //->where('id', $id_barang)
+            //$stok = $penjualan->getStock($id_layanan);
+            //$stok_akhir = $stok - $jml_layanan;
+            //$affected = DB::table('layanan')
+              //->where('id', $id_layanan)
               //->update(['stok' => $stok_akhir]);
 
             // tambahkan ke status transaksi
@@ -225,8 +225,8 @@ class Penjualan extends Model
                     ) 
                     GROUP BY no_transaksi
                    ";
-            $barang = DB::select($sql,[$id_pelanggan]);
-            foreach($barang as $b):
+            $layanan = DB::select($sql,[$id_pelanggan]);
+            foreach($layanan as $b):
                 $mak_expired = $b->mak_expired;
                 $no_transaksi = $b->no_transaksi;
             endforeach;
@@ -246,20 +246,20 @@ class Penjualan extends Model
                 ->update(['status' => 'expired']);
 
                 // kembalikan stok
-                //$sql = "SELECT id_barang,jml_barang 
+                //$sql = "SELECT id_layanan,jml_layanan 
                         //FROM penjualan_detail 
                        // WHERE  no_transaksi = ?
                    // ";
-                //$barang = DB::select($sql,[$no_transaksi]);
-                //foreach($barang as $b):
-                    //$id_barang = $b->id_barang;
-                   // $jml_barang_lama = $b->jml_barang;
+                //$layanan = DB::select($sql,[$no_transaksi]);
+                //foreach($layanan as $b):
+                    //$id_layanan = $b->id_layanan;
+                   // $jml_layanan_lama = $b->jml_layanan;
                     // query stok
                     // kembalikan stok
-                    //$stok = $penjualan->getStock($id_barang);
-                    //$stok_akhir = $stok + $jml_barang_lama;
-                    //$affected = DB::table('barang')
-                    //->where('id', $id_barang)
+                    //$stok = $penjualan->getStock($id_layanan);
+                    //$stok_akhir = $stok + $jml_layanan_lama;
+                    //$affected = DB::table('layanan')
+                    //->where('id', $id_layanan)
                     //->update(['stok' => $stok_akhir]);
                 //endforeach;
 
@@ -291,20 +291,20 @@ class Penjualan extends Model
                 // masukkan ke tabel detail_penjualan
                 DB::table('penjualan_detail')->insert([
                     'no_transaksi' => $faktur,
-                    'id_barang' => $id_barang,
-                    'harga_barang' => $harga_barang,
+                    'id_layanan' => $id_layanan,
+                    'harga_layanan' => $harga_layanan,
                     'jml_kg' => $jml_kg,
                     'total' => $total,
                     'tgl_transaksi' => $date,
                     'tgl_expired' => $date_plus_3
                 ]);
 
-                // update stok di tabel barang menjadi berkurang
+                // update stok di tabel layanan menjadi berkurang
                 // dapatkan stok dulu
-                //$stok = $penjualan->getStock($id_barang);
-                //$stok_akhir = $stok - $jml_barang;
-                //$affected = DB::table('barang')
-                //->where('id', $id_barang)
+                //$stok = $penjualan->getStock($id_layanan);
+                //$stok_akhir = $stok - $jml_layanan;
+                //$affected = DB::table('layanan')
+                //->where('id', $id_layanan)
                 //->update(['stok' => $stok_akhir]);
                 // akhir buat nomor faktur baru
 
@@ -319,42 +319,42 @@ class Penjualan extends Model
             }else{
                 // belum mencapai masa expired, maka
                 // tambahkan total belanja ke tabel penjualan_detail
-                // cek untuk id barang yang sama, maka tidak usah tambah lagi, 
+                // cek untuk id layanan yang sama, maka tidak usah tambah lagi, 
                 // tapi cukup jml belanjanya diupdate
                 // selain itu masukkan lagi ke penjualan detail
-                // 1. cek apakah yg diinputkan adalah id barang yang sudah ada di keranjang atau tidak
-                $sql = "SELECT id_barang,jml_kg,no_transaksi FROM penjualan_detail
+                // 1. cek apakah yg diinputkan adalah id layanan yang sudah ada di keranjang atau tidak
+                $sql = "SELECT id_layanan,jml_kg,no_transaksi FROM penjualan_detail
                         WHERE  
                         no_transaksi IN 
                         (
                             SELECT no_transaksi
                             FROM penjualan
                             WHERE id_pelanggan = ? AND status NOT IN ('selesai','expired','siap_bayar','konfirmasi_bayar')
-                        ) AND id_barang = ?
+                        ) AND id_layanan = ?
                         ";
-                $barang = DB::select($sql,[$id_pelanggan,$id_barang]);
+                $layanan = DB::select($sql,[$id_pelanggan,$id_layanan]);
                 $cek = 0;
-                foreach($barang as $b):
-                    $id_barang_tabel = $b->id_barang;
+                foreach($layanan as $b):
+                    $id_layanan_tabel = $b->id_layanan;
                     $jml_kg_tabel = $b->jml_kg;
                     $no_transaksi_tabel = $b->no_transaksi;
                     $cek = 1;
-                    // tambahkan jml barangnya dan tamnbahkan masa expirednya
+                    // tambahkan jml layanannya dan tamnbahkan masa expirednya
                     $date_plus_3=Date('Y-m-d H:i:s', strtotime('+3 days')); //tambahkan 3 hari untuk expired datenya
                     $jml_kg_akhir = $jml_kg + $jml_kg_tabel;
-                    $total_tagihan  = $harga_barang * $jml_kg_akhir;
+                    $total_tagihan  = $harga_layanan * $jml_kg_akhir;
                     $affected = DB::table('penjualan_detail')
                     ->where('no_transaksi','=', $no_transaksi_tabel)
-                    ->where('id_barang', '=',$id_barang_tabel)
+                    ->where('id_layanan', '=',$id_layanan_tabel)
                     ->update(['jml_kg' => $jml_kg_akhir,'total'=> $total_tagihan,
                               'tgl_transaksi' => $date_plus_3
                              ]);
 
                     // dapatkan stok dulu
-                    //$stok = $penjualan->getStock($id_barang);
-                    //$stok_akhir = $stok - $jml_barang;
-                    //$affected = DB::table('barang')
-                    //->where('id', $id_barang)
+                    //$stok = $penjualan->getStock($id_layanan);
+                    //$stok_akhir = $stok - $jml_layanan;
+                    //$affected = DB::table('layanan')
+                    //->where('id', $id_layanan)
                     //->update(['stok' => $stok_akhir]);
 
                 endforeach;
@@ -367,16 +367,16 @@ class Penjualan extends Model
                     $sql = "SELECT max(no_transaksi) as no_transaksi  FROM penjualan
                             WHERE id_pelanggan = ? AND status NOT IN ('selesai','expired','siap_bayar','konfirmasi_bayar')
                            ";
-                    $barang = DB::select($sql,[$id_pelanggan]);
-                    foreach($barang as $b):
+                    $layanan = DB::select($sql,[$id_pelanggan]);
+                    foreach($layanan as $b):
                         $no_transaksi = $b->no_transaksi;
                     endforeach;
 
                     $sql = "SELECT total_harga  FROM penjualan
                             WHERE no_transaksi = ? 
                            ";
-                    $barang = DB::select($sql,[$no_transaksi]);
-                    foreach($barang as $b):
+                    $layanan = DB::select($sql,[$no_transaksi]);
+                    foreach($layanan as $b):
                         $total_harga_lama = $b->total_harga;
                     endforeach;
 
@@ -397,20 +397,20 @@ class Penjualan extends Model
                     // masukkan ke tabel detail_penjualan
                     DB::table('penjualan_detail')->insert([
                         'no_transaksi' => $no_transaksi,
-                        'id_barang' => $id_barang,
-                        'harga_barang' => $harga_barang,
+                        'id_layanan' => $id_layanan,
+                        'harga_layanan' => $harga_layanan,
                         'jml_kg' => $jml_kg,
                         'total' => $total,
                         'tgl_transaksi' => $date,
                         'tgl_expired' => $date_plus_3
                     ]);
 
-                    // update stok di tabel barang menjadi berkurang
+                    // update stok di tabel layanan menjadi berkurang
                     // dapatkan stok dulu
-                    //$stok = $penjualan->getStock($id_barang);
-                    //$stok_akhir = $stok - $jml_barang;
-                    //$affected = DB::table('barang')
-                    //->where('id', $id_barang)
+                    //$stok = $penjualan->getStock($id_layanan);
+                    //$stok_akhir = $stok - $jml_layanan;
+                    //$affected = DB::table('layanan')
+                    //->where('id', $id_layanan)
                     //->update(['stok' => $stok_akhir]);
                     // akhir buat nomor faktur baru
                     // 
@@ -434,12 +434,12 @@ class Penjualan extends Model
                 FROM penjualan a
                 JOIN penjualan_detail b
                 ON (a.no_transaksi=b.no_transaksi)
-                JOIN barang c 
-                ON (b.id_barang = c.id)
+                JOIN layanan c 
+                ON (b.id_layanan = c.id)
                 WHERE a.id_pelanggan = ? AND a.status 
                 not in ('selesai','expired','siap_bayar','konfirmasi_bayar')";
-        $barang = DB::select($sql,[$id_pelanggan]);
-        return $barang;
+        $layanan = DB::select($sql,[$id_pelanggan]);
+        return $layanan;
     }
 
     // view data siap bayar
@@ -458,12 +458,12 @@ class Penjualan extends Model
                 FROM penjualan a
                 JOIN penjualan_detail b
                 ON (a.no_transaksi=b.no_transaksi)
-                JOIN barang c 
-                ON (b.id_barang = c.id)
+                JOIN layanan c 
+                ON (b.id_layanan = c.id)
                 WHERE a.id_pelanggan = ? AND a.status 
                 in ('siap_bayar')";
-        $barang = DB::select($sql,[$id_pelanggan]);
-        return $barang;
+        $layanan = DB::select($sql,[$id_pelanggan]);
+        return $layanan;
     }
 
     public static function jmlviewSiapBayar($id_pelanggan){
@@ -471,12 +471,12 @@ class Penjualan extends Model
                 FROM penjualan a
                 JOIN penjualan_detail b
                 ON (a.no_transaksi=b.no_transaksi)
-                JOIN barang c 
-                ON (b.id_barang = c.id)
+                JOIN layanan c 
+                ON (b.id_layanan = c.id)
                 WHERE a.id_pelanggan = ? AND a.status 
                 in ('siap_bayar')";
-        $barang = DB::select($sql,[$id_pelanggan]);
-        return $barang;
+        $layanan = DB::select($sql,[$id_pelanggan]);
+        return $layanan;
     }
 
     // untuk menghapus data penjualan detail
@@ -513,21 +513,21 @@ class Penjualan extends Model
     // kembalikan stok
     //public static function kembalikanstok($id_penjualan_detail){
        // $penjualan = new Penjualan;
-       // $sql = "SELECT jml_barang,id_barang FROM penjualan_detail WHERE id = ?";
-      //  $barang = DB::select($sql,[$id_penjualan_detail]);
-       // foreach($barang as $b):
-       //     $jml_barang = $b->jml_barang;
-       //     $id_barang = $b->id_barang;
+       // $sql = "SELECT jml_layanan,id_layanan FROM penjualan_detail WHERE id = ?";
+      //  $layanan = DB::select($sql,[$id_penjualan_detail]);
+       // foreach($layanan as $b):
+       //     $jml_layanan = $b->jml_layanan;
+       //     $id_layanan = $b->id_layanan;
        // endforeach;
 
-        //$stok = $penjualan->getStock($id_barang);
-        //$stok_akhir = $stok + $jml_barang;
-        //$affected = DB::table('barang')
-        //  ->where('id', $id_barang)
+        //$stok = $penjualan->getStock($id_layanan);
+        //$stok_akhir = $stok + $jml_layanan;
+        //$affected = DB::table('layanan')
+        //  ->where('id', $id_layanan)
         //  ->update(['stok' => $stok_akhir]);
     //}
 
-    // dapatkan jumlah barang
+    // dapatkan jumlah layanan
     public static function getJumlahKg($id_pelanggan){
         $sql = "SELECT count(*) as jml FROM penjualan_detail 
                 WHERE no_transaksi IN 
@@ -535,8 +535,8 @@ class Penjualan extends Model
                  WHERE id_pelanggan = ? AND status 
                  NOT IN ('expired','hapus','siap_bayar','konfirmasi_bayar','selesai')
                 )";
-        $barang = DB::select($sql,[$id_pelanggan]);
-        foreach($barang as $b):
+        $layanan = DB::select($sql,[$id_pelanggan]);
+        foreach($layanan as $b):
             $jml = $b->jml;
         endforeach;
         return $jml;
@@ -545,8 +545,8 @@ class Penjualan extends Model
     public static function getJmlInvoice($id_pelanggan){
         $sql = "SELECT count(*) as jml FROM penjualan 
                 WHERE status = 'siap_bayar' AND id_pelanggan = ?";
-        $barang = DB::select($sql,[$id_pelanggan]);
-        foreach($barang as $b):
+        $layanan = DB::select($sql,[$id_pelanggan]);
+        foreach($layanan as $b):
             $jml = $b->jml;
         endforeach;
         return $jml;

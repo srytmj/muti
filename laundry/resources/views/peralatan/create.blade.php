@@ -54,7 +54,7 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Layanan</h5>
+            <h5 class="card-title fw-semibold mb-4">Data Peralatan</h5>
 
                 <!-- Display Error jika ada error -->
                 @if ($errors->any())
@@ -69,39 +69,31 @@
                 <!-- Akhir Display Error -->
 
                 <!-- Awal Dari Input Form -->
-                <form action="{{ route('layanan.update', $layanan->id) }}" method="post">
+                <form action="{{ route('peralatan.store') }}" method="post">
                     @csrf
-                    @method('PUT')
                     <fieldset disabled>
-                        <div class="mb-3"><label for="idlayananlabel">ID Layanan</label>
-                        <input class="form-control form-control-solid" id="id_layanan_tampil" name="id_layanan_tampil" type="text" placeholder="Contoh: LYN-001" value="{{$layanan->id_layanan}}" readonly></div>
+                        <div class="mb-3"><label for="idperalatanlabel">ID Peralatan</label>
+                        <input class="form-control form-control-solid" id="id_peralatan_tampil" name="id_peralatan_tampil" type="text" placeholder="Contoh: LYN-001" value="{{$id_peralatan}}" readonly></div>
                     </fieldset>
-                    <input type="hidden" id="id_layanan" name="id_layanan" value="{{$layanan->id_layanan}}">
                     
-                    <div class="mb-0"><label for="tariflabel">Layanan</label>
-                        <textarea class="form-control form-control-solid" id="nama_layanan" name="nama_layanan" rows="3" placeholder="Cth: Cuci Kering">{{$layanan->nama_layanan}}</textarea>
+                    <input type="hidden" id="id_peralatan" name="id_peralatan" value="{{$id_peralatan}}">
+
+                    <!-- Jenis Peralatan -->
+                    <div class="mb-3">
+                        <label class="form-label">Jenis Peralatan</label>
+                        <select name="nama_peralatan" class="form-select" aria-label="Default select example">
+                          <option selected>Open this select menu</option>
+                          <option value="Mesin Cuci">Mesin Cuci</option>
+                          <option value="Setrika">Setrika</option>
+                        </select>
                     </div>
 
-                    <div class="mb-3">
-                      <label class="form-label">Jenis Layanan</label>
-                      <select name="jenis_layanan" class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="Regular">Regular</option>
-                        <option value="Express">Express</option>
-                      </select>
-                  </div>
-                    
-        
-                    <div class="mb-0"><label for="tariflabel">Tarif</label>
-                        <textarea class="form-control form-control-solid" id="harga" name="harga" rows="3" placeholder="Cth: 20000">{{$layanan->harga}}</textarea>
-                    </div>
-                    <br>
                     <!-- untuk tombol simpan -->
                     
-                    <input class="col-sm-1 btn btn-success btn-sm" type="submit" value="Ubah">
+                    <input class="col-sm-1 btn btn-success btn-sm" type="submit" value="Simpan">
 
                     <!-- untuk tombol batal simpan -->
-                    <a class="col-sm-1 btn btn-dark  btn-sm" href="{{ url('/layanan') }}" role="button">Batal</a>
+                    <a class="col-sm-1 btn btn-dark  btn-sm" href="{{ url('/peralatan') }}" role="button">Batal</a>
                     
                 </form>
                 <!-- Akhir Dari Input Form -->
@@ -109,6 +101,7 @@
           </div>
         </div>
       </div>
+    </div>
 		
 		
 		

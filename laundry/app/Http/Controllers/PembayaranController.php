@@ -21,12 +21,12 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        // // getViewBarang()
-        $barang = Penjualan::getBarang();
+        // // getViewLayanan()
+        $layanan = Penjualan::getLayanan();
         $id_pelanggan = Auth::id();
         return view('penjualan.view',
                 [
-                    'barang' => $barang,
+                    'layanan' => $layanan,
                     'jml' => Penjualan::getJumlahKg($id_pelanggan),
                     'jml_invoice' => Penjualan::getJmlInvoice($id_pelanggan),
                 ]

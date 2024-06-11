@@ -2,11 +2,11 @@
 
 @section('konten')
 
-<h1>Data Barang</h1>
+<h1>Data Layanan</h1>
 
 <u1>
-    @foreach($barang as $p)
-        <li>{{ "Kode Barang: " . $p->kode_barang . ' | Nama Barang: ' . $p->nama_layanan . ' | Harga Barang: ' . $p->harga_barang . ' | Stok Barang: ' . $p->stock_barang }}</li>
+    @foreach($layanan as $p)
+        <li>{{ "Kode Layanan: " . $p->kode_layanan . ' | Nama Layanan: ' . $p->nama_layanan . ' | Harga Layanan: ' . $p->harga_layanan . ' | Stok Layanan: ' . $p->stock_layanan }}</li>
     @endforeach
 </ul>
 

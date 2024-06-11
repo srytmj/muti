@@ -84,8 +84,8 @@
                             <span class="text">Lihat Keranjang</span>
                     </a>
                 </div>
-                    <!-- List Data Barang yang dijual -->
-                    @foreach ($barang as $p)
+                    <!-- List Data Layanan yang dijual -->
+                    @foreach ($layanan as $p)
                         <div class="col-lg-6">
 
                             <!-- Collapsable Card Example -->
@@ -141,7 +141,7 @@
             <!-- Form untuk input -->
             <form action="#" class="formpenjualan" method="post">
             @csrf
-            <input type="hidden" id="idbaranghidden" name="idbaranghidden" value="">
+            <input type="hidden" id="idlayananhidden" name="idlayananhidden" value="">
             <input type="hidden" id="tipeproses" name="tipeproses" value="">
 
                 <div class="mb-3 row">
@@ -208,7 +208,7 @@
               $('#labelmodalubah').html('Tambah Data Belanja');
 
               var id = $(this).data('id');
-              var url1 = "{{url('/penjualan/barang')}}";
+              var url1 = "{{url('/penjualan/layanan')}}";
               var url2 = url1.concat("/",id); //menggabungkan url dengan data nama file
 
               url = "{{url('penjualan')}}";
@@ -233,15 +233,15 @@
                     dataType: "json",
                     success: function (response) {
                         // console.log(response);
-                        $('#nama_layanan').val(response.barang[0].nama_layanan);
-                        $('#harga').val(number_format(response.barang[0].harga));
+                        $('#nama_layanan').val(response.layanan[0].nama_layanan);
+                        $('#harga').val(number_format(response.layanan[0].harga));
                         $('#jumlah').attr(
                             {
                                 'min':1,
-                                'max':response.barang[0].stok
+                                'max':response.layanan[0].stok
                             }
                         );
-                        $('#idbaranghidden').val(response.barang[0].id);
+                        $('#idlayananhidden').val(response.layanan[0].id);
                     }
 
                 }
@@ -302,7 +302,7 @@
                                             // ubah tampilan stok
                                             // get htmlnya
                                             // dapatkan idnya dari
-                                            var id = $('#idbaranghidden').val();
+                                            var id = $('#idlayananhidden').val();
                                             refreshstok();
                                             
                                         }
@@ -326,10 +326,10 @@
             $.ajax(
                 {
                     type: "GET",
-                    url: "{{url('penjualan/barang')}}",
+                    url: "{{url('penjualan/layanan')}}",
                     dataType: "json",
                     success: function (response) {
-                        $.each(response.barang, function (key, item) {
+                        $.each(response.layanan, function (key, item) {
                             // update elemen stok html
                             var idelemenstok = "#xstok-"+item.id;
                             $(idelemenstok).html(item.stok);

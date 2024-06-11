@@ -62,6 +62,14 @@
               </a>
             </li>
             <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url('peralatan') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Peralatan</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
               <a class="sidebar-link" href="{{ url('coa') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
@@ -74,7 +82,7 @@
                 <span>
                   <i class="ti ti-typography"></i>
                 </span>
-                <span class="hide-menu">Barang</span>
+                <span class="hide-menu">Layanan</span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -98,6 +106,41 @@
               </a>
             </li>
             <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url('pembayaran/viewapprovalstatus') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-credit-card"></i>
+                </span>
+                <span class="hide-menu">Approval Pembayaran</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url('midtrans') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-credit-card"></i>
+                </span>
+                <span class="hide-menu">Midtrans</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url('pembayaran/viewstatusPG') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-credit-card"></i>
+                </span>
+                <span class="hide-menu">View Status PG</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url('midtrans/bayar') }}" aria-expanded="false">
+                <span>
+                  <i class="ti ti-credit-card"></i>
+                </span>
+                <span class="hide-menu">Pembayaran PG</span>
+              </a>
+            </li>
+            {{-- <li class="sidebar-item">
               <a class="sidebar-link" href="{{ url('pembayaran/viewkeranjang') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
@@ -120,7 +163,7 @@
                 </span>
                 <span class="hide-menu">Approval Pembayaran</span>
               </a>
-            </li>
+            </li> --}}
             <li class="sidebar-item" hidden>
               <a class="sidebar-link" href="{{ url('penggajian') }}" aria-expanded="false">
                 <span>
